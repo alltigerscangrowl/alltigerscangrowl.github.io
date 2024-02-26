@@ -1,0 +1,25 @@
+# Gzip
+<FilesMatch "\.(css|js|eot|svg|ttf)$">
+	SetOutputFilter DEFLATE
+</FilesMatch>
+
+# Expires
+<FilesMatch "\.(css|js|gif|ico|jpe?g|png|eot|svg|ttf|woff|mp3|ogg)$">
+	<IfModule mod_expires.c>
+		ExpiresActive On
+		ExpiresDefault "access plus 1 month"
+	</IfModule>
+</FilesMatch>
+
+# Mime
+AddType audio/mpeg mp3
+AddType audio/ogg ogg
+
+# Rewrite
+Options +FollowSymLinks
+RewriteEngine on
+RewriteBase /
+
+# Always www subdomain
+RewriteCond %{HTTP_HOST} ^([-a-z0-9]+\.[a-z]+)$
+RewriteRule (.*) http://www.%1/$1 [R=301,L]
